@@ -412,7 +412,7 @@
     } catch(e) { alert('Gagal terhubung ke server.'); }
   }
 
-  // ── GENERATE SINOPSIS AI (GEMINI) ──
+  // ── GENERATE SINOPSIS AI ──
   async function generateSinopsis() {
     if (!GEMINI_KEY) {
       alert('Isi GEMINI_KEY di bagian konfigurasi admin.html untuk menggunakan fitur ini.');
@@ -422,46 +422,34 @@
     const pengarang = document.getElementById('fieldPengarang').value.trim();
     const kategori = document.getElementById('fieldKategori').value;
     const mapel = document.getElementById('fieldMapel').value.trim();
-    
-    if (!judul) { 
-      alert('Isi judul buku dulu sebelum generate sinopsis.'); 
-      return;
-    }
+    if (!judul) { alert('Isi judul buku dulu sebelum generate sinopsis.'); return; }
 
     const btn = document.getElementById('btnAI');
     btn.disabled = true;
     btn.textContent = '⏳ Generating...';
-    
+
     try {
-      const promptText = `Tulis sinopsis singkat (2-3 kalimat, bahasa Indonesia) untuk buku berikut:\nJudul: ${judul}\nPengarang: ${pengarang || '-'}\nKategori: ${kategori || '-'}\nMapel: ${mapel || '-'}\nSinopsis harus sesuai untuk perpustakaan sekolah MI (madrasah ibtidaiyah).`;
-
-      // Menggunakan Gemini 1.5 Flash (model yang cepat dan efisien)
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{ text: promptText }]
-          }]
-        })
-      });
-
+      const res = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `Tulis sinopsis singkat (2-3 kalimat, bahasa Indonesia) untuk buku berikut:\nJudul: ${judul}\nPengarang: ${pengarang || '-'}\nKategori: ${kategori || '-'}\nMapel: ${mapel || '-'}\nSinopsis harus sesuai untuk perpustakaan sekolah MI (madrasah ibtidaiyah).`
+              }]
+            }],
+            generationConfig: { maxOutputTokens: 200 }
+          })
+        }
+      );
       const data = await res.json();
-      
-      // Mengambil teks dari response Gemini
       const teks = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      
-      if (teks) {
-        document.getElementById('fieldSinopsis').value = teks;
-      } else {
-        console.error(data); // Log error ke console jika format tidak sesuai
-        alert('Gagal generate sinopsis. Pastikan API Key valid dan kuota mencukupi.');
-      }
+      if (teks) document.getElementById('fieldSinopsis').value = teks.trim();
+      else alert('Gagal generate sinopsis.');
     } catch(e) {
-      console.error(e);
-      alert('Gagal terhubung ke API Gemini.');
+      alert('Gagal terhubung ke API AI.');
     }
 
     btn.disabled = false;
