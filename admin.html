@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Perpustakaan Digital MI Sultan Agung</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
+
+  /* ── LOGIN ── */
+  .login-wrap {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .login-card {
+    background: #fff; border: 1px solid #e8e8e0; border-radius: 16px;
+    padding: 32px 28px; width: 100%; max-width: 360px;
+  }
+  .login-logo {
+    width: 48px; height: 48px; background: #1D9E75; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 18px; margin-bottom: 16px;
+  }
+  .login-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .login-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+  .login-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; }
+  .login-input {
+    width: 100%; height: 42px; border: 1px solid #ddd; border-radius: 8px;
+    padding: 0 12px; font-size: 14px; outline: none; margin-bottom: 14px;
+  }
+  .login-input:focus { border-color: #1D9E75; }
+  .login-btn {
+    width: 100%; height: 42px; background: #1D9E75; color: #fff;
+    border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .login-btn:hover { background: #17875f; }
+  .login-err { font-size: 12px; color: #d04040; margin-top: 10px; display: none; text-align: center; }
+
+  /* ── APP SHELL ── */
+  #appShell { display: none; }
+
+  .topbar {
+    background: #fff; border-bottom: 1px solid #e8e8e0; padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo {
+    width: 32px; height: 32px; background: #1D9E75; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 13px;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; }
+  .topbar-sub { font-size: 11px; color: #888; }
+  .btn-logout {
+    font-size: 12px; color: #888; background: none; border: 1px solid #ddd;
+    border-radius: 6px; padding: 5px 10px; cursor: pointer;
+  }
+  .btn-logout:hover { border-color: #d04040; color: #d04040; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: #fff; border-bottom: 1px solid #e8e8e0;
+    display: flex; padding: 0 16px; gap: 0;
+  }
+  .tab {
+    padding: 12px 16px; font-size: 13px; font-weight: 500; color: #888;
+    cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+  }
+  .tab.active { color: #1D9E75; border-bottom-color: #1D9E75; font-weight: 600; }
+
+  /* ── CONTENT ── */
+  .page { display: none; padding: 16px; max-width: 860px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── STATS BAR ── */
+  .stats-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .stat { flex: 1; background: #fff; border-radius: 8px; padding: 10px; text-align: center; border: 1px solid #e8e8e0; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stat-lbl { font-size: 11px; color: #888; margin-top: 1px; }
+
+  /* ── ACTION BAR ── */
+  .action-bar {
+    display: flex; gap: 8px; align-items: center;
+    background: #fff; border: 1px solid #e8e8e0; border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .search-input {
+    flex: 1; min-width: 160px; height: 34px; border: 1px solid #ddd; border-radius: 6px;
+    padding: 0 10px; font-size: 13px; outline: none;
+  }
+  .search-input:focus { border-color: #1D9E75; }
+  .btn-primary {
+    height: 34px; padding: 0 14px; background: #1D9E75; color: #fff;
+    border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: #17875f; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border: 1px solid #e8e8e0; border-radius: 10px; background: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: #f9f9f6; }
+  th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid #e8e8e0; white-space: nowrap; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f0f0ea; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf7; }
+
+  .col-judul { font-weight: 600; color: #1a1a1a; }
+  .col-meta { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; padding: 2px 7px;
+    border-radius: 10px; font-weight: 500; white-space: nowrap;
+  }
+
+  .btn-edit {
+    font-size: 12px; padding: 4px 10px; border: 1px solid #ddd;
+    border-radius: 5px; background: #fff; cursor: pointer; color: #555;
+  }
+  .btn-edit:hover { border-color: #1D9E75; color: #1D9E75; }
+  .btn-del {
+    font-size: 12px; padding: 4px 10px; border: 1px solid #ddd;
+    border-radius: 5px; background: #fff; cursor: pointer; color: #555; margin-left: 4px;
+  }
+  .btn-del:hover { border-color: #d04040; color: #d04040; }
+
+  /* ── LOADING / EMPTY ── */
+  .loading { display: flex; align-items: center; gap: 10px; padding: 32px 16px; color: #888; font-size: 13px; justify-content: center; }
+  .spinner { width: 22px; height: 22px; border: 2px solid #e8e8e0; border-top-color: #1D9E75; border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty { text-align: center; padding: 40px; color: #aaa; font-size: 13px; }
+
+  /* ── MODAL FORM ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    z-index: 200; align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  @media (min-width: 600px) {
+    .modal-overlay { align-items: center; }
+  }
+  .modal {
+    background: #fff; border-radius: 16px 16px 0 0;
+    width: 100%; max-width: 540px; max-height: 92vh; overflow-y: auto;
+    padding: 0 0 24px;
+  }
+  @media (min-width: 600px) { .modal { border-radius: 16px; max-height: 88vh; } }
+  .modal-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto 0; }
+  .modal-header { padding: 16px 20px 12px; border-bottom: 1px solid #f0f0ea; }
+  .modal-header h2 { font-size: 16px; font-weight: 700; }
+  .modal-header p { font-size: 12px; color: #888; margin-top: 2px; }
+  .modal-body { padding: 16px 20px; }
+
+  .form-row { margin-bottom: 14px; }
+  .form-row label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; }
+  .form-row input, .form-row select, .form-row textarea {
+    width: 100%; border: 1px solid #ddd; border-radius: 7px;
+    padding: 8px 10px; font-size: 13px; font-family: inherit; outline: none;
+    background: #fafaf7; color: #1a1a1a;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    border-color: #1D9E75; background: #fff;
+  }
+  .form-row textarea { resize: vertical; min-height: 80px; }
+  .form-hint { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .modal-footer { padding: 0 20px; display: flex; gap: 8px; }
+  .btn-cancel {
+    flex: 1; height: 40px; background: #f5f5f0; border: 1px solid #ddd;
+    border-radius: 7px; font-size: 13px; cursor: pointer; color: #555;
+  }
+  .btn-cancel:hover { background: #eee; }
+  .btn-save {
+    flex: 2; height: 40px; background: #1D9E75; color: #fff;
+    border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .btn-save:hover { background: #17875f; }
+  .btn-save:disabled { background: #9ed4c2; cursor: not-allowed; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1a1a1a; color: #fff; font-size: 13px; padding: 10px 18px;
+    border-radius: 8px; z-index: 300; transition: transform .25s ease; white-space: nowrap;
+    pointer-events: none;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+  #toast.err { background: #d04040; }
+
+  /* ── PANDUAN PAGE ── */
+  .guide-card {
+    background: #fff; border: 1px solid #e8e8e0; border-radius: 12px;
+    padding: 20px; margin-bottom: 12px;
+  }
+  .guide-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .guide-step {
+    display: flex; gap: 12px; padding: 8px 0;
+    border-bottom: 1px solid #f0f0ea;
+  }
+  .guide-step:last-child { border-bottom: none; }
+  .step-num {
+    width: 24px; height: 24px; background: #E1F5EE; color: #0F6E56;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .step-text strong { color: #1a1a1a; }
+  .step-text code {
+    background: #f5f5f0; border: 1px solid #e8e8e0;
+    padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: monospace;
+  }
+  .guide-note {
+    background: #FFFBE6; border: 1px solid #FFE58F; border-radius: 8px;
+    padding: 10px 12px; font-size: 12px; color: #7A5800; margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  /* ── SETTINGS PAGE ── */
+  .setting-row {
+    background: #fff; border: 1px solid #e8e8e0; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 10px;
+  }
+  .setting-row label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; }
+  .setting-row input {
+    width: 100%; border: 1px solid #ddd; border-radius: 7px;
+    padding: 8px 10px; font-size: 13px; outline: none;
+  }
+  .setting-row input:focus { border-color: #1D9E75; }
+  .setting-desc { font-size: 11px; color: #aaa; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ LOGIN ════ -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">MI</div>
+    <div class="login-title">Panel Admin</div>
+    <div class="login-sub">Perpustakaan Digital MI Sultan Agung</div>
+    <label class="login-label">Password</label>
+    <input class="login-input" type="password" id="pwInput" placeholder="Masukkan password admin"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Masuk</button>
+    <div class="login-err" id="loginErr">Password salah. Coba lagi.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ APP ════ -->
+<div id="appShell">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo">MI</div>
+      <div>
+        <div class="topbar-title">Admin Perpustakaan</div>
+        <div class="topbar-sub">MI Sultan Agung</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">Keluar</button>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('koleksi', this)">📚 Koleksi</div>
+    <div class="tab" onclick="switchTab('panduan', this)">📋 Panduan Upload</div>
+    <div class="tab" onclick="switchTab('pengaturan', this)">⚙️ Pengaturan</div>
+  </div>
+
+  <!-- ─── TAB: KOLEKSI ─── -->
+  <div class="page active" id="tab-koleksi">
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Koleksi</div></div>
+      <div class="stat"><div class="stat-num" id="statAktif">—</div><div class="stat-lbl">Aktif</div></div>
+      <div class="stat"><div class="stat-num" id="statKategori">—</div><div class="stat-lbl">Kategori</div></div>
+    </div>
+
+    <div class="action-bar">
+      <input class="search-input" id="searchAdmin" placeholder="Cari judul atau pengarang…" oninput="renderTabel()">
+      <button class="btn-primary" onclick="bukaFormTambah()">+ Tambah Buku</button>
+    </div>
+
+    <div class="table-wrap" id="tabelWrap">
+      <div class="loading"><div class="spinner"></div>Memuat data…</div>
+    </div>
+  </div>
+
+  <!-- ─── TAB: PANDUAN ─── -->
+  <div class="page" id="tab-panduan">
+    <div class="guide-card">
+      <h3>📤 Cara Upload PDF ke Google Drive</h3>
+      <div class="guide-step">
+        <div class="step-num">1</div>
+        <div class="step-text">Buka <strong>Google Drive</strong> lalu masuk ke folder <strong>Perpustakaan MISA</strong> (minta link ke admin utama jika belum punya akses).</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">2</div>
+        <div class="step-text">Klik tombol <strong>+ Baru → Upload file</strong>, pilih file PDF buku yang akan diupload. Tunggu hingga upload selesai (muncul notifikasi di pojok kanan bawah).</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">3</div>
+        <div class="step-text">Setelah file muncul di Drive, klik kanan pada file → <strong>Bagikan</strong> → ubah akses menjadi <strong>"Siapa saja yang memiliki link"</strong> dan izin <strong>Viewer</strong>. Klik Selesai.</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">4</div>
+        <div class="step-text">Klik kanan file lagi → <strong>Dapatkan link</strong>. Salin link tersebut. Link akan berbentuk:<br><code>https://drive.google.com/file/d/<strong>FILE_ID_INI</strong>/view?usp=sharing</code></div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">5</div>
+        <div class="step-text">Ambil bagian <strong>FILE_ID</strong>-nya saja (teks panjang di antara <code>/d/</code> dan <code>/view</code>). Contoh: <code>1A2B3CxxxxxxxxxxxxxxxxxxxxXYZ</code></div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">6</div>
+        <div class="step-text">Buka form <strong>Tambah Buku</strong> di tab Koleksi, isi semua metadata, dan paste FILE_ID tadi ke kolom <strong>Google Drive ID</strong>. Simpan.</div>
+      </div>
+      <div class="guide-note">
+        ⚠️ <strong>Penting:</strong> Pastikan izin file sudah diubah ke "Siapa saja yang memiliki link" sebelum disimpan ke katalog. Jika tidak, siswa tidak akan bisa membuka file tersebut.
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <h3>✏️ Tips Isi Metadata Buku</h3>
+      <div class="guide-step">
+        <div class="step-num">📌</div>
+        <div class="step-text"><strong>Judul:</strong> Tulis sesuai sampul buku. Huruf kapital di awal kata utama.</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">📌</div>
+        <div class="step-text"><strong>Pengarang:</strong> Nama penulis/penerbit. Untuk buku teks Kemendikbud bisa diisi "Kemendikbud".</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">📌</div>
+        <div class="step-text"><strong>Kelas:</strong> Isi angka saja (1–6). Jika berlaku untuk semua kelas, bisa dikosongkan atau isi "-".</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">📌</div>
+        <div class="step-text"><strong>Sinopsis:</strong> Tulis 2–3 kalimat deskripsi isi buku agar siswa tahu ini buku tentang apa.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TAB: PENGATURAN ─── -->
+  <div class="page" id="tab-pengaturan">
+    <div class="setting-row">
+      <label>URL Apps Script (API)</label>
+      <input type="text" id="settingApi" placeholder="https://script.google.com/macros/s/…/exec">
+      <div class="setting-desc">URL deployment Google Apps Script. Dapatkan dari Apps Script → Deploy → Manage deployments.</div>
+    </div>
+    <div class="setting-row">
+      <label>Ganti Password Admin</label>
+      <input type="password" id="settingPwLama" placeholder="Password lama" style="margin-bottom:6px">
+      <input type="password" id="settingPwBaru" placeholder="Password baru">
+      <div class="setting-desc">Password disimpan di browser ini saja (localStorage). Minimal 6 karakter.</div>
+    </div>
+    <button class="btn-primary" onclick="simpanPengaturan()" style="margin-top:4px">Simpan Pengaturan</button>
+  </div>
+
+</div><!-- /appShell -->
+
+<!-- ─── MODAL FORM BUKU ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2 id="modalTitle">Tambah Buku</h2>
+      <p id="modalSubtitle">Isi data buku lalu klik Simpan</p>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="fId">
+
+      <div class="form-row">
+        <label>Judul Buku <span style="color:#d04040">*</span></label>
+        <input type="text" id="fJudul" placeholder="Contoh: Matematika Kelas 4">
+      </div>
+
+      <div class="form-row">
+        <label>Pengarang / Penerbit</label>
+        <input type="text" id="fPengarang" placeholder="Contoh: Kemendikbud">
+      </div>
+
+      <div class="form-2col">
+        <div class="form-row">
+          <label>Kategori <span style="color:#d04040">*</span></label>
+          <select id="fKategori">
+            <option value="">— pilih —</option>
+            <option>Buku teks</option>
+            <option>Buku bacaan</option>
+            <option>Karya siswa</option>
+            <option>Karya Guru</option>
+            <option>Dokumen</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Kelas</label>
+          <select id="fKelas">
+            <option value="-">Semua kelas</option>
+            <option>1</option><option>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Mata Pelajaran</label>
+        <select id="fMapel">
+          <option value="-">— tidak terkait mapel —</option>
+          <option>Matematika</option>
+          <option>Bahasa Indonesia</option>
+          <option>IPA</option>
+          <option>IPS</option>
+          <option>PKn</option>
+          <option>Pendidikan Agama Islam</option>
+          <option>Bahasa Arab</option>
+          <option>Bahasa Inggris</option>
+          <option>Seni Budaya</option>
+          <option>PJOK</option>
+          <option>Fiqih</option>
+          <option>Akidah Akhlak</option>
+          <option>Al-Qur'an Hadis</option>
+          <option>SKI</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Sinopsis</label>
+        <textarea id="fSinopsis" placeholder="Deskripsi singkat isi buku (2–3 kalimat)…"></textarea>
+      </div>
+
+      <div class="form-2col">
+        <div class="form-row">
+          <label>Google Drive ID <span style="color:#d04040">*</span></label>
+          <input type="text" id="fDriveId" placeholder="1A2B3Cxxx…">
+          <div class="form-hint">ID file dari link Google Drive</div>
+        </div>
+        <div class="form-row">
+          <label>Tahun Terbit</label>
+          <input type="number" id="fTahun" placeholder="2024" min="1990" max="2099">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="tutupModal()">Batal</button>
+      <button class="btn-save" id="btnSimpan" onclick="simpanBuku()">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────────────────
+const DEFAULT_API = 'https://script.google.com/macros/s/AKfycbyixVTMoyuFGCWKudeLF1tRaVkmUxuNEd1M9xgkTZxfsLnrz9LALArwyYzqS23WAlPQKg/exec';
+const DEFAULT_PW  = 'admin123'; // password default — ganti via tab Pengaturan
+
+const KATEGORI_CONFIG = {
+  'Buku teks':   { warna: '#E6F1FB', teks: '#185FA5' },
+  'Buku bacaan': { warna: '#E1F5EE', teks: '#0F6E56' },
+  'Karya siswa': { warna: '#EEEDFE', teks: '#534AB7' },
+  'Karya Guru':  { warna: '#FAEEDA', teks: '#854F0B' },
+  'Dokumen':     { warna: '#F1EFE8', teks: '#5F5E5A' },
+};
+
+function getApi()  { return localStorage.getItem('libApiUrl') || DEFAULT_API; }
+function getPw()   { return localStorage.getItem('libAdminPw') || DEFAULT_PW; }
+function isLoggedIn() { return sessionStorage.getItem('libAdmin') === '1'; }
+
+// ─────────────────────────────────────────────────────────────────────────
+// LOGIN / LOGOUT
+// ─────────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const val = document.getElementById('pwInput').value;
+  if (val === getPw()) {
+    sessionStorage.setItem('libAdmin', '1');
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('appShell').style.display  = 'block';
+    loadKoleksi();
+    prefillSettings();
+  } else {
+    const err = document.getElementById('loginErr');
+    err.style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+    setTimeout(() => err.style.display = 'none', 3000);
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('libAdmin');
+  location.reload();
+}
+
+// Auto-login if session active
+window.addEventListener('DOMContentLoaded', () => {
+  if (isLoggedIn()) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('appShell').style.display  = 'block';
+    loadKoleksi();
+    prefillSettings();
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────
+let semuaData = [];
+
+async function loadKoleksi() {
+  document.getElementById('tabelWrap').innerHTML =
+    '<div class="loading"><div class="spinner"></div>Memuat data…</div>';
+  try {
+    const res = await fetchJSONP(getApi() + '?action=list&callback=adminCb');
+    semuaData = res.data || [];
+    updateStats();
+    renderTabel();
+  } catch(e) {
+    document.getElementById('tabelWrap').innerHTML =
+      '<div class="empty">⚠️ Gagal memuat data. Periksa URL API di tab Pengaturan.</div>';
+  }
+}
+
+function fetchJSONP(url) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    const cbName = 'adminCb_' + Date.now();
+    window[cbName] = (data) => { resolve(data); document.body.removeChild(script); delete window[cbName]; };
+    script.src = url.replace('callback=adminCb', 'callback=' + cbName);
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
+async function apiPost(payload) {
+  const res = await fetch(getApi(), {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return res.json();
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// STATS + TABEL
+// ─────────────────────────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('statTotal').textContent    = semuaData.length;
+  document.getElementById('statAktif').textContent    = semuaData.filter(d => d.aktif === true || d.aktif === 'TRUE').length;
+  document.getElementById('statKategori').textContent = new Set(semuaData.map(d => d.kategori)).size;
+}
+
+function renderTabel() {
+  const q = (document.getElementById('searchAdmin').value || '').toLowerCase();
+  let data = semuaData;
+  if (q) data = data.filter(d =>
+    (d.judul || '').toLowerCase().includes(q) ||
+    (d.pengarang || '').toLowerCase().includes(q)
+  );
+
+  if (!data.length) {
+    document.getElementById('tabelWrap').innerHTML =
+      '<div class="empty">📭 Tidak ada buku ditemukan.</div>';
+    return;
+  }
+
+  let html = `<table>
+    <thead><tr>
+      <th>Judul</th>
+      <th>Kategori</th>
+      <th>Kelas</th>
+      <th>Drive ID</th>
+      <th>Aksi</th>
+    </tr></thead><tbody>`;
+
+  data.forEach(b => {
+    const cfg = KATEGORI_CONFIG[b.kategori] || { warna: '#F1EFE8', teks: '#5F5E5A' };
+    const driveOk = b.drive_id && b.drive_id !== '-';
+    html += `<tr>
+      <td>
+        <div class="col-judul">${esc(b.judul)}</div>
+        <div class="col-meta">${esc(b.pengarang || '—')} ${b.tahun ? '· ' + b.tahun : ''}</div>
+      </td>
+      <td><span class="badge" style="background:${cfg.warna};color:${cfg.teks}">${esc(b.kategori)}</span></td>
+      <td>${b.kelas && b.kelas !== '-' ? 'Kelas ' + b.kelas : '—'}</td>
+      <td style="font-size:11px;color:${driveOk ? '#0F6E56' : '#d04040'};font-family:monospace">
+        ${driveOk ? '✓ ' + b.drive_id.slice(0,14) + '…' : '✗ belum diisi'}
+      </td>
+      <td style="white-space:nowrap">
+        <button class="btn-edit" onclick='bukaFormEdit(${JSON.stringify(b).replace(/'/g,"&#39;")})'>Edit</button>
+        <button class="btn-del"  onclick="hapusBuku('${b.id}','${esc(b.judul)}')">Hapus</button>
+      </td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('tabelWrap').innerHTML = html;
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// MODAL FORM
+// ─────────────────────────────────────────────────────────────────────────
+function bukaFormTambah() {
+  resetForm();
+  document.getElementById('modalTitle').textContent    = 'Tambah Buku';
+  document.getElementById('modalSubtitle').textContent = 'Isi data buku lalu klik Simpan';
+  bukaModal();
+}
+
+function bukaFormEdit(buku) {
+  resetForm();
+  document.getElementById('modalTitle').textContent    = 'Edit Buku';
+  document.getElementById('modalSubtitle').textContent = 'Ubah data lalu klik Simpan';
+  document.getElementById('fId').value       = buku.id || '';
+  document.getElementById('fJudul').value    = buku.judul || '';
+  document.getElementById('fPengarang').value= buku.pengarang || '';
+  document.getElementById('fKategori').value = buku.kategori || '';
+  document.getElementById('fKelas').value    = buku.kelas || '-';
+  document.getElementById('fMapel').value    = buku.mapel || '-';
+  document.getElementById('fSinopsis').value = buku.sinopsis || '';
+  document.getElementById('fDriveId').value  = buku.drive_id || '';
+  document.getElementById('fTahun').value    = buku.tahun || '';
+  bukaModal();
+}
+
+function resetForm() {
+  ['fId','fJudul','fPengarang','fSinopsis','fDriveId','fTahun'].forEach(id =>
+    document.getElementById(id).value = '');
+  document.getElementById('fKategori').value = '';
+  document.getElementById('fKelas').value    = '-';
+  document.getElementById('fMapel').value    = '-';
+}
+
+function bukaModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('fJudul').focus();
+}
+
+function tutupModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) tutupModal();
+}
+
+async function simpanBuku() {
+  const judul    = document.getElementById('fJudul').value.trim();
+  const kategori = document.getElementById('fKategori').value;
+  const drive_id = document.getElementById('fDriveId').value.trim();
+
+  if (!judul)    { showToast('⚠️ Judul wajib diisi', true); return; }
+  if (!kategori) { showToast('⚠️ Kategori wajib dipilih', true); return; }
+  if (!drive_id) { showToast('⚠️ Drive ID wajib diisi', true); return; }
+
+  const btn = document.getElementById('btnSimpan');
+  btn.disabled = true;
+  btn.textContent = 'Menyimpan…';
+
+  const id = document.getElementById('fId').value;
+  const payload = {
+    action:    id ? 'update' : 'add',
+    id:        id || undefined,
+    judul,
+    pengarang: document.getElementById('fPengarang').value.trim() || '-',
+    kategori,
+    kelas:     document.getElementById('fKelas').value,
+    mapel:     document.getElementById('fMapel').value,
+    sinopsis:  document.getElementById('fSinopsis').value.trim(),
+    drive_id,
+    tahun:     document.getElementById('fTahun').value || '',
+    aktif:     true
+  };
+
+  try {
+    const res = await apiPost(payload);
+    if (res.status === 'ok') {
+      tutupModal();
+      showToast(id ? '✅ Buku berhasil diperbarui' : '✅ Buku berhasil ditambahkan');
+      await loadKoleksi();
+    } else {
+      showToast('❌ Error: ' + (res.error || 'Gagal menyimpan'), true);
+    }
+  } catch(e) {
+    showToast('❌ Koneksi gagal. Coba lagi.', true);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '💾 Simpan';
+}
+
+async function hapusBuku(id, judul) {
+  if (!confirm(`Hapus buku "${judul}"?\n\nBuku tidak akan muncul di katalog (data di Sheets tetap ada).`)) return;
+  try {
+    const res = await apiPost({ action: 'delete', id });
+    if (res.status === 'ok') {
+      showToast('🗑️ Buku dihapus dari katalog');
+      await loadKoleksi();
+    } else {
+      showToast('❌ ' + (res.error || 'Gagal menghapus'), true);
+    }
+  } catch(e) {
+    showToast('❌ Koneksi gagal', true);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// PENGATURAN
+// ─────────────────────────────────────────────────────────────────────────
+function prefillSettings() {
+  document.getElementById('settingApi').value = getApi();
+}
+
+function simpanPengaturan() {
+  const apiUrl  = document.getElementById('settingApi').value.trim();
+  const pwLama  = document.getElementById('settingPwLama').value;
+  const pwBaru  = document.getElementById('settingPwBaru').value;
+
+  if (apiUrl) {
+    localStorage.setItem('libApiUrl', apiUrl);
+    showToast('✅ URL API disimpan');
+  }
+
+  if (pwBaru) {
+    if (pwLama !== getPw()) { showToast('❌ Password lama salah', true); return; }
+    if (pwBaru.length < 6)  { showToast('⚠️ Password minimal 6 karakter', true); return; }
+    localStorage.setItem('libAdminPw', pwBaru);
+    document.getElementById('settingPwLama').value = '';
+    document.getElementById('settingPwBaru').value = '';
+    showToast('✅ Password berhasil diubah');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, isErr = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (isErr ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.className = '', 2800);
+}
+</script>
+</body>
+</html>
