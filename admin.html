@@ -500,7 +500,7 @@
         alert('Response: ' + JSON.stringify(data).substring(0, 300));
       }
     } catch(e) {
-      alert('Gagal terhubung ke Gemini API.');
+      alert('Error: ' + e.message);
     }
 
     btn.disabled = false;
