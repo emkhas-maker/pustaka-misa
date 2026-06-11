@@ -8,7 +8,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: system-ui, sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
 
-  /* LOGIN */
   .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
   .login-box { background: #fff; border-radius: 16px; border: 1px solid #e8e8e0; padding: 32px 24px; width: 100%; max-width: 360px; }
   .login-logo { width: 48px; height: 48px; background: #1D9E75; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 18px; margin: 0 auto 16px; }
@@ -16,7 +15,6 @@
   .login-sub { text-align: center; font-size: 13px; color: #888; margin-bottom: 24px; }
   .login-error { background: #FCEBEB; color: #A32D2D; font-size: 13px; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; display: none; }
 
-  /* TOPBAR */
   .topbar { background: #fff; border-bottom: 1px solid #e8e8e0; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .topbar-left { display: flex; align-items: center; gap: 10px; }
   .topbar-logo { width: 32px; height: 32px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 12px; }
@@ -25,7 +23,6 @@
   .btn-logout { font-size: 12px; color: #888; background: none; border: 1px solid #ddd; border-radius: 6px; padding: 5px 10px; cursor: pointer; }
   .btn-logout:hover { color: #A32D2D; border-color: #A32D2D; }
 
-  /* FORM INPUT */
   label { font-size: 12px; color: #666; display: block; margin-bottom: 4px; }
   input, select, textarea { width: 100%; height: 38px; border: 1px solid #ddd; border-radius: 8px; padding: 0 12px; font-size: 13px; background: #fff; color: #1a1a1a; outline: none; font-family: inherit; }
   input:focus, select:focus, textarea:focus { border-color: #1D9E75; }
@@ -33,25 +30,22 @@
   .form-group { margin-bottom: 14px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  /* BUTTONS */
   .btn-primary { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 11px; background: #1D9E75; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; border: none; cursor: pointer; }
   .btn-primary:hover { background: #17875f; }
   .btn-primary:disabled { background: #9FE1CB; cursor: not-allowed; }
-  .btn-secondary { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px; background: #f5f5f0; border-radius: 8px; color: #555; font-size: 13px; border: 1px solid #ddd; cursor: pointer; margin-bottom: 8px; }
+  .btn-secondary { display: flex; align-items: center; justify-content: center; gap: 6px; width: auto; padding: 6px 14px; background: #f5f5f0; border-radius: 8px; color: #555; font-size: 13px; border: 1px solid #ddd; cursor: pointer; }
   .btn-secondary:hover { border-color: #1D9E75; color: #1D9E75; }
-  .btn-ai { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #534AB7; background: #EEEDFE; padding: 4px 10px; border-radius: 20px; border: none; cursor: pointer; }
-  .btn-ai:hover { background: #CECBF6; }
+  .btn-ai { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #0F6E56; background: #E1F5EE; padding: 4px 10px; border-radius: 20px; border: none; cursor: pointer; }
+  .btn-ai:hover { background: #B5E8D5; }
   .btn-ai:disabled { opacity: .5; cursor: not-allowed; }
   .btn-danger { font-size: 12px; color: #A32D2D; background: none; border: 1px solid #F09595; border-radius: 6px; padding: 5px 10px; cursor: pointer; }
   .btn-danger:hover { background: #FCEBEB; }
 
-  /* PANEL */
   .panel { background: #fff; border-radius: 12px; border: 1px solid #e8e8e0; margin: 12px 16px; }
   .panel-header { padding: 14px 16px; border-bottom: 1px solid #e8e8e0; display: flex; align-items: center; justify-content: space-between; }
   .panel-title { font-size: 14px; font-weight: 600; }
   .panel-body { padding: 16px; }
 
-  /* DAFTAR KOLEKSI */
   .list-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #f0f0e8; }
   .list-item:last-child { border-bottom: none; }
   .list-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
@@ -62,21 +56,15 @@
   .btn-edit { font-size: 11px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; }
   .btn-edit:hover { background: #B5D4F4; }
 
-  /* BADGE */
-  .badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; }
-
-  /* ALERT */
   .alert { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; display: none; }
   .alert-success { background: #E1F5EE; color: #0F6E56; }
   .alert-error { background: #FCEBEB; color: #A32D2D; }
 
-  /* LOADING */
   .spinner { width: 20px; height: 20px; border: 2px solid #e8e8e0; border-top-color: #1D9E75; border-radius: 50%; animation: spin .7s linear infinite; display: inline-block; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-row { text-align: center; padding: 32px; color: #888; font-size: 13px; }
 
-  /* SECTION TABS */
-  .tabs { display: flex; gap: 0; border-bottom: 1px solid #e8e8e0; padding: 0 16px; background: #fff; }
+  .tabs { display: flex; border-bottom: 1px solid #e8e8e0; padding: 0 16px; background: #fff; }
   .tab { padding: 10px 16px; font-size: 13px; color: #888; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
   .tab.active { color: #1D9E75; border-bottom-color: #1D9E75; font-weight: 600; }
 
@@ -85,11 +73,16 @@
 
   .drive-hint { font-size: 11px; color: #888; margin-top: 4px; line-height: 1.5; }
   .sinopsis-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+
+  /* Pengaturan API key */
+  .settings-box { background: #F9F9F6; border: 1px dashed #ccc; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+  .settings-box label { color: #534AB7; font-weight: 600; }
+  .settings-hint { font-size: 11px; color: #888; margin-top: 4px; line-height: 1.5; }
+  .key-saved { font-size: 11px; color: #0F6E56; margin-top: 4px; display: none; }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="login-wrap" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">MI</div>
@@ -104,9 +97,7 @@
   </div>
 </div>
 
-<!-- ADMIN SCREEN -->
 <div id="adminScreen" style="display:none">
-
   <div class="topbar">
     <div class="topbar-left">
       <div class="topbar-logo">MI</div>
@@ -124,6 +115,7 @@
   <div class="tabs">
     <div class="tab active" onclick="switchTab('tambah')">Tambah buku</div>
     <div class="tab" onclick="switchTab('daftar')">Daftar koleksi</div>
+    <div class="tab" onclick="switchTab('pengaturan')">Pengaturan</div>
   </div>
 
   <!-- TAB: TAMBAH -->
@@ -136,9 +128,7 @@
       <div class="panel-body">
         <div class="alert alert-success" id="alertSuccess">Koleksi berhasil disimpan!</div>
         <div class="alert alert-error" id="alertError">Gagal menyimpan. Coba lagi.</div>
-
         <input type="hidden" id="fieldId">
-
         <div class="form-group">
           <label>Judul buku *</label>
           <input type="text" id="fieldJudul" placeholder="Contoh: Matematika Kelas 4">
@@ -169,12 +159,8 @@
             <label>Kelas</label>
             <select id="fieldKelas">
               <option value="">— Semua —</option>
-              <option>Kelas 1</option>
-              <option>Kelas 2</option>
-              <option>Kelas 3</option>
-              <option>Kelas 4</option>
-              <option>Kelas 5</option>
-              <option>Kelas 6</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6</option>
             </select>
           </div>
           <div class="form-group">
@@ -190,7 +176,7 @@
         <div class="form-group">
           <div class="sinopsis-header">
             <label style="margin:0">Sinopsis</label>
-            <button class="btn-ai" id="btnAI" onclick="generateSinopsis()">✨ Generate AI</button>
+            <button class="btn-ai" id="btnAI" onclick="generateSinopsis()">✨ Generate AI (Gemini)</button>
           </div>
           <textarea id="fieldSinopsis" placeholder="Tulis sinopsis, atau klik Generate AI..."></textarea>
         </div>
@@ -210,20 +196,42 @@
   <div class="section" id="tab-daftar">
     <div style="padding:12px 16px 0;display:flex;align-items:center;justify-content:space-between">
       <div style="font-size:13px;color:#888" id="infoJumlah"></div>
-      <button class="btn-secondary" style="width:auto;padding:6px 14px" onclick="loadDaftar()">↻ Refresh</button>
+      <button class="btn-secondary" onclick="loadDaftar()">↻ Refresh</button>
     </div>
     <div class="panel" style="margin-top:10px">
       <div id="daftarKoleksi"><div class="loading-row"><div class="spinner"></div></div></div>
     </div>
   </div>
 
+  <!-- TAB: PENGATURAN -->
+  <div class="section" id="tab-pengaturan">
+    <div class="panel">
+      <div class="panel-header"><div class="panel-title">Pengaturan API Gemini</div></div>
+      <div class="panel-body">
+        <div class="settings-box">
+          <label>🔑 Gemini API Key</label>
+          <div class="settings-hint">Dapatkan API key gratis di <strong>aistudio.google.com</strong> → Get API key → Create API key. API key disimpan di browser kamu (localStorage), tidak dikirim ke server manapun.</div>
+        </div>
+        <div class="form-group">
+          <label>API Key</label>
+          <input type="password" id="inputGeminiKey" placeholder="Paste API key Gemini di sini...">
+          <div class="key-saved" id="keySaved">✓ API key tersimpan</div>
+        </div>
+        <button class="btn-primary" onclick="simpanGeminiKey()">💾 Simpan API Key</button>
+        <div style="margin-top:10px">
+          <button class="btn-secondary" style="width:100%;margin-top:8px" onclick="testGemini()">🧪 Test koneksi Gemini</button>
+        </div>
+        <div class="alert alert-success" id="alertSettingsOk" style="margin-top:12px">API key valid! Gemini siap digunakan.</div>
+        <div class="alert alert-error" id="alertSettingsErr" style="margin-top:12px">API key tidak valid. Periksa kembali.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  // ── KONFIGURASI ──
   const API_URL  = 'https://script.google.com/macros/s/AKfycbyixVTMoyuFGCWKudeLF1tRaVkmUxuNEd1M9xgkTZxfsLnrz9LALArwyYzqS23WAlPQKg/exec';
   const PASSWORD = 'misa2024'; // ← ganti password ini
-  const GEMINI_KEY = 'AQ.Ab8RN6KqE0tPRV1e47Dj8kI2Ih2TujcuKtwWJ4331J0r8KBTsQ'; // ← isi API key Gemini untuk fitur AI (opsional)
 
   const KATEGORI_CONFIG = {
     'Buku teks':   { warna: '#E6F1FB', ikon: '📘' },
@@ -235,6 +243,48 @@
   function getIkon(k) { return (KATEGORI_CONFIG[k] || {}).ikon || '📚'; }
   function getWarna(k) { return (KATEGORI_CONFIG[k] || {}).warna || '#F1EFE8'; }
 
+  // ── GEMINI KEY (simpan di localStorage) ──
+  function getGeminiKey() { return localStorage.getItem('gemini_key') || ''; }
+  function simpanGeminiKey() {
+    const key = document.getElementById('inputGeminiKey').value.trim();
+    if (!key) { alert('API key tidak boleh kosong.'); return; }
+    localStorage.setItem('gemini_key', key);
+    document.getElementById('keySaved').style.display = 'block';
+    setTimeout(() => document.getElementById('keySaved').style.display = 'none', 3000);
+  }
+  async function testGemini() {
+    const key = getGeminiKey();
+    if (!key) { alert('Isi dan simpan API key dulu di tab Pengaturan.'); return; }
+    document.getElementById('alertSettingsOk').style.display = 'none';
+    document.getElementById('alertSettingsErr').style.display = 'none';
+    try {
+      const res = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + key,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: 'Halo' }] }] })
+        }
+      );
+      const data = await res.json();
+      if (data.candidates) {
+        document.getElementById('alertSettingsOk').style.display = 'block';
+      } else {
+        document.getElementById('alertSettingsErr').style.display = 'block';
+      }
+    } catch(e) {
+      document.getElementById('alertSettingsErr').style.display = 'block';
+    }
+  }
+
+  // Tampilkan key yang sudah tersimpan (masked)
+  function initSettings() {
+    const key = getGeminiKey();
+    if (key) {
+      document.getElementById('inputGeminiKey').placeholder = '••••••••••••••••••••• (sudah tersimpan)';
+    }
+  }
+
   // ── LOGIN ──
   function doLogin() {
     const pw = document.getElementById('passwordInput').value;
@@ -243,6 +293,7 @@
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminScreen').style.display = 'block';
       loadDaftar();
+      initSettings();
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
@@ -254,11 +305,12 @@
   if (sessionStorage.getItem('adminAuth') === '1') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminScreen').style.display = 'block';
+    initSettings();
   }
 
   // ── TABS ──
   function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ['tambah','daftar'][i] === tab));
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ['tambah','daftar','pengaturan'][i] === tab));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
     if (tab === 'daftar') loadDaftar();
@@ -271,8 +323,8 @@
       const cbName = 'cb' + (++cbCounter);
       const script = document.createElement('script');
       window[cbName] = (data) => { resolve(data); document.body.removeChild(script); delete window[cbName]; };
-      script.src = url + '&callback=' + cbName;
-      script.onerror = reject;
+      script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+      script.onerror = () => reject(new Error('JSONP gagal'));
       document.body.appendChild(script);
     });
   }
@@ -296,8 +348,8 @@
             <div class="list-meta">${b.kategori} · ${b.pengarang || '—'} · ${b.aktif ? 'Aktif' : 'Nonaktif'}</div>
           </div>
           <div class="list-actions">
-            <button class="btn-edit" onclick="editKoleksi(${JSON.stringify(b).replace(/"/g,'&quot;')})">Edit</button>
-            <button class="btn-danger" onclick="hapusKoleksi('${b.id}','${b.judul.replace(/'/g,"\\'")}')">Hapus</button>
+            <button class="btn-edit" onclick='editKoleksi(${JSON.stringify(b)})'>Edit</button>
+            <button class="btn-danger" onclick="hapusKoleksi('${b.id}','${(b.judul||'').replace(/'/g,"\\'")}')">Hapus</button>
           </div>
         </div>`).join('');
     } catch(e) {
@@ -319,12 +371,12 @@
 
   function editKoleksi(b) {
     switchTab('tambah');
-    document.getElementById('fieldId').value = b.id;
-    document.getElementById('fieldJudul').value = b.judul;
+    document.getElementById('fieldId').value = b.id || '';
+    document.getElementById('fieldJudul').value = b.judul || '';
     document.getElementById('fieldPengarang').value = b.pengarang || '';
     document.getElementById('fieldKategori').value = b.kategori || '';
     document.getElementById('fieldTahun').value = b.tahun || '';
-    document.getElementById('fieldKelas').value = b.kelas ? 'Kelas ' + b.kelas : '';
+    document.getElementById('fieldKelas').value = b.kelas || '';
     document.getElementById('fieldMapel').value = b.mapel || '';
     document.getElementById('fieldDriveId').value = b.drive_id || '';
     document.getElementById('fieldSinopsis').value = b.sinopsis || '';
@@ -349,46 +401,41 @@
     document.getElementById('alertError').style.display = 'none';
   }
 
-  // ── SIMPAN (ADD / UPDATE) ──
+  // ── SIMPAN via JSONP GET ──
   async function simpanKoleksi() {
-    const judul = document.getElementById('fieldJudul').value.trim();
+    const judul     = document.getElementById('fieldJudul').value.trim();
     const pengarang = document.getElementById('fieldPengarang').value.trim();
-    const kategori = document.getElementById('fieldKategori').value;
-    const driveId = document.getElementById('fieldDriveId').value.trim().replace(/\?.*$/, '');
+    const kategori  = document.getElementById('fieldKategori').value;
+    const driveId   = document.getElementById('fieldDriveId').value.trim().replace(/\?.*$/, '');
 
     if (!judul || !pengarang || !kategori || !driveId) {
       showAlert('error', 'Judul, pengarang, kategori, dan Drive ID wajib diisi.');
       return;
     }
 
-    const id = document.getElementById('fieldId').value;
-    const kelasRaw = document.getElementById('fieldKelas').value;
-    const payload = {
-      action: id ? 'update' : 'add',
-      id, judul, pengarang, kategori,
-      kelas: kelasRaw.replace('Kelas ', ''),
-      mapel: document.getElementById('fieldMapel').value.trim(),
+    const id     = document.getElementById('fieldId').value;
+    const action = id ? 'update' : 'add';
+    const params = new URLSearchParams({
+      action, id: id || '', judul, pengarang, kategori,
+      kelas:    document.getElementById('fieldKelas').value,
+      mapel:    document.getElementById('fieldMapel').value.trim(),
       sinopsis: document.getElementById('fieldSinopsis').value.trim(),
       drive_id: driveId,
-      tahun: document.getElementById('fieldTahun').value || '',
-      aktif: document.getElementById('fieldAktif').value === 'true'
-    };
+      tahun:    document.getElementById('fieldTahun').value || '',
+      aktif:    document.getElementById('fieldAktif').value
+    });
 
     const btn = document.getElementById('btnSimpan');
     btn.disabled = true;
     btn.textContent = 'Menyimpan...';
 
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-      const json = await res.json();
-      if (json.status === 'ok') {
+      const res = await fetchJSONP(API_URL + '?' + params.toString());
+      if (res.status === 'ok') {
         showAlert('success', id ? 'Koleksi berhasil diupdate!' : 'Koleksi berhasil ditambahkan!');
         resetForm();
       } else {
-        showAlert('error', json.error || 'Gagal menyimpan.');
+        showAlert('error', res.error || 'Gagal menyimpan.');
       }
     } catch(e) {
       showAlert('error', 'Gagal terhubung ke server.');
@@ -398,30 +445,28 @@
     btn.textContent = id ? '💾 Update koleksi' : '💾 Simpan koleksi';
   }
 
-  // ── HAPUS ──
+  // ── HAPUS via JSONP GET ──
   async function hapusKoleksi(id, judul) {
-    if (!confirm(`Hapus "${judul}"?\nBuku akan disembunyikan dari katalog.`)) return;
+    if (!confirm('Hapus "' + judul + '"?\nBuku akan disembunyikan dari katalog.')) return;
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'delete', id })
-      });
-      const json = await res.json();
-      if (json.status === 'ok') { loadDaftar(); }
-      else alert('Gagal menghapus: ' + (json.error || ''));
+      const res = await fetchJSONP(API_URL + '?action=delete&id=' + encodeURIComponent(id));
+      if (res.status === 'ok') { loadDaftar(); }
+      else alert('Gagal menghapus: ' + (res.error || ''));
     } catch(e) { alert('Gagal terhubung ke server.'); }
   }
 
-  // ── GENERATE SINOPSIS AI ──
+  // ── GENERATE SINOPSIS via GEMINI ──
   async function generateSinopsis() {
-    if (!GEMINI_KEY) {
-      alert('Isi GEMINI_KEY di bagian konfigurasi admin.html untuk menggunakan fitur ini.');
+    const key = getGeminiKey();
+    if (!key) {
+      alert('Isi API key Gemini dulu di tab Pengaturan.');
+      switchTab('pengaturan');
       return;
     }
-    const judul = document.getElementById('fieldJudul').value.trim();
+    const judul     = document.getElementById('fieldJudul').value.trim();
     const pengarang = document.getElementById('fieldPengarang').value.trim();
-    const kategori = document.getElementById('fieldKategori').value;
-    const mapel = document.getElementById('fieldMapel').value.trim();
+    const kategori  = document.getElementById('fieldKategori').value;
+    const mapel     = document.getElementById('fieldMapel').value.trim();
     if (!judul) { alert('Isi judul buku dulu sebelum generate sinopsis.'); return; }
 
     const btn = document.getElementById('btnAI');
@@ -430,33 +475,38 @@
 
     try {
       const res = await fetch(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY,
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + key,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             contents: [{
               parts: [{
-                text: `Tulis sinopsis singkat (2-3 kalimat, bahasa Indonesia) untuk buku berikut:\nJudul: ${judul}\nPengarang: ${pengarang || '-'}\nKategori: ${kategori || '-'}\nMapel: ${mapel || '-'}\nSinopsis harus sesuai untuk perpustakaan sekolah MI (madrasah ibtidaiyah).`
+                text: 'Tulis sinopsis singkat (2-3 kalimat, bahasa Indonesia) untuk buku berikut:\nJudul: ' + judul +
+                      '\nPengarang: ' + (pengarang||'-') +
+                      '\nKategori: ' + (kategori||'-') +
+                      '\nMapel: ' + (mapel||'-') +
+                      '\nSinopsis harus sesuai untuk perpustakaan sekolah MI (madrasah ibtidaiyah). Langsung tulis sinopsisnya saja tanpa preamble.'
               }]
-            }],
-            generationConfig: { maxOutputTokens: 200 }
+            }]
           })
         }
       );
       const data = await res.json();
-      const teks = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      if (teks) document.getElementById('fieldSinopsis').value = teks.trim();
-      else alert('Gagal generate sinopsis.');
+      const teks = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (teks) {
+        document.getElementById('fieldSinopsis').value = teks.trim();
+      } else {
+        alert('Gagal generate sinopsis. Periksa API key di tab Pengaturan.');
+      }
     } catch(e) {
-      alert('Gagal terhubung ke API AI.');
+      alert('Gagal terhubung ke Gemini API.');
     }
 
     btn.disabled = false;
-    btn.textContent = '✨ Generate AI';
+    btn.textContent = '✨ Generate AI (Gemini)';
   }
 
-  // Init
   if (sessionStorage.getItem('adminAuth') === '1') loadDaftar();
 </script>
 </body>
