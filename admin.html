@@ -497,7 +497,7 @@
       if (teks) {
         document.getElementById('fieldSinopsis').value = teks.trim();
       } else {
-        alert('Gagal generate sinopsis. Periksa API key di tab Pengaturan.');
+        alert('Response: ' + JSON.stringify(data).substring(0, 300));
       }
     } catch(e) {
       alert('Gagal terhubung ke Gemini API.');
